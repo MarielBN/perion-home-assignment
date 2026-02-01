@@ -1,5 +1,4 @@
 import json
-import logging
 import os
 from typing import Dict, Any, List
 from behave import given, when, then
@@ -33,7 +32,6 @@ def listing_visible(context: Context) -> None:
 @then("all product names should be non-empty")
 def verify_products_names_are_populated(context: Context) -> None:
     names: List[str] = context.products_page.get_product_names()
-    logging.info(f"names: {names}")
     assert names
     assert all(name for name in names), "Product name is empty"
 
@@ -41,7 +39,6 @@ def verify_products_names_are_populated(context: Context) -> None:
 @then("all product prices should be greater than 0")
 def verify_products_prices_are_positive(context: Context) -> None:
     prices: List[float] = context.products_page.get_product_prices()
-    logging.info(f"prices_positive: {prices}")
     assert prices
     assert all(price > 0 for price in prices), f"Expected prices to be greater than 0, but got {prices} instead"
 
@@ -54,8 +51,6 @@ def sort_products(context: Context, sort_option: str) -> None:
 @then("product prices should be sorted {direction}")
 def verify_products_prices_are_sorted(context: Context, direction: str) -> None:
     prices: List[float] = context.products_page.get_product_prices()
-    print(f"prices: {prices}")
-    logging.info(f"prices: {prices}")
 
     direction = direction.strip().lower()
     if direction == "ascending":

@@ -50,7 +50,6 @@ requirements.txt
 ## Setup
 
 ```bash
-# From project root
 pip install -r requirements.txt
 ```
 
@@ -108,16 +107,11 @@ Build the image:
 docker build -t behave-tests .
 ```
 
-Run all tests (Chrome inside the container):
+Run all tests:
 
 ```bash
 docker run --rm behave-tests
 ```
-
-Note:
-- The Docker image runs Chrome in a virtual display (Xvfb) by default for stability.
-- A fresh browser session is started per scenario to avoid cross-scenario state bleed.
-- You can still force headless mode with `-e HEADLESS=true`.
 
 Run with custom options (e.g. one feature, format):
 
@@ -128,63 +122,13 @@ docker run --rm behave-tests behave features/login.feature -f pretty
 By default the container writes:
 
 - **Screenshots**: `/app/screenshots`
-- **HTML report**: `/app/reports/report.html`
-
-### Windows (PowerShell)
-
-```powershell
-docker run --rm `
-  -v ${PWD}\screenshots:/app/screenshots `
-  -v ${PWD}\reports:/app/reports `
-  behave-tests
-```
-
-If tests error in Docker, check the saved screenshot(s) and the printed URL/title to see where the browser is stuck.
-
-### Linux/macOS
-
-```bash
-docker run --rm \
-  -v "$(pwd)/screenshots:/app/screenshots" \
-  -v "$(pwd)/reports:/app/reports" \
-  behave-tests
-```
-
-## HTML Report
-
-Install a reporter and run with it.
-
-**Using `behave-html-formatter`:**
-
-```bash
-pip install behave-html-formatter
-behave -f behave_html_formatter:HTMLFormatter -o report.html
-```
-
-Then open `report.html` in a browser.
-
-### Docker HTML report
-
-```powershell
-docker run --rm `
-  -v ${PWD}\reports:/app/reports `
-  behave-tests behave -f behave_html_formatter:HTMLFormatter -o /app/reports/report.html
-```
-
-**Using `allure-behave` (Allure):**
-
-```bash
-pip install allure-behave
-behave -f allure_behave.formatter:AllureFormatter -o allure_results
-allure serve allure_results
-```
 
 ## Configuration
 
 - **Base URL**: Set `SAUCEDEMO_URL` (default: `https://www.saucedemo.com`)
 - **Headless**: Set `HEADLESS=true`
 - **Browser**: Set `BROWSER=chrome` or `BROWSER=firefox`
-- **Waits**: `utils/config.py` – `EXPLICIT_WAIT_TIMEOUT` (default 10 seconds)
+- **Waits**: `utils/config.py` – `EXPLICIT_WAIT_TIMEOUT`
 
 ## Screenshots on Failure
 

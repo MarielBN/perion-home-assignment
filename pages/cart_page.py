@@ -1,4 +1,3 @@
-import logging
 from typing import List
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webelement import WebElement
@@ -24,7 +23,6 @@ class CartPage(BasePage):
             attr = btn.get_attribute("data-test")
             if attr and attr.startswith(prefix):
                 ids.append(attr[len(prefix):])
-        logging.info(f"get_cart_product_ids: {ids}")
         return ids
 
     def remove_item_by_id(self, product_id: str, timeout: int = 10) -> None:
