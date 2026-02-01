@@ -39,6 +39,7 @@ utils/
 Dockerfile
 README.md
 requirements.txt
+saucedemo - Test Cases.xlsx
 ```
 
 ## Prerequisites
